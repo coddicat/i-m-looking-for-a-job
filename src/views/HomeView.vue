@@ -46,7 +46,7 @@ function nextTick() {
   }
   const datetime = propertyStore.properties?.JobSearchStartDateTime.toDate();
   timeSpent.value = detailedFromNow(datetime);
-  timer = setTimeout(nextTick, 500);
+  timer = window.setTimeout(nextTick, 500);
 }
 
 async function likeHandler() {
@@ -61,7 +61,7 @@ onMounted(nextTick);
 onUnmounted(() => {
   stopped = true;
   if (timer) {
-    clearTimeout(timer);
+    window.clearTimeout(timer);
   }
 });
 </script>
