@@ -23,6 +23,7 @@ const collRef = collection(firestoreDb, "users") as CollectionReference<UserEnti
 export const useAuthStore = defineStore('currentUser', () => {
     const currentAuthUser = ref<User>();
     const currentUser = ref<UserEntity>();
+    const ready = ref(false);
 
     onAuthStateChanged(auth, async (user) => {
         if (user) {
@@ -36,6 +37,8 @@ export const useAuthStore = defineStore('currentUser', () => {
             currentUser.value = undefined;
             console.log('User is signed out');
         }
+
+        ready.value = true;
     });  
     
     async function setUser(uid: string, isAnonymous: boolean) {
@@ -49,5 +52,5 @@ export const useAuthStore = defineStore('currentUser', () => {
         });    
     }             
 
-    return { currentAuthUser, currentUser }
+    return { currentAuthUser, currentUser, ready }
 })

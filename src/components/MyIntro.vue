@@ -1,12 +1,18 @@
+<script setup lang="ts">
+import { usePropertyStore } from '@/stores/properties';
+import { computed } from 'vue';
+
+const propertyStore = usePropertyStore();
+const properties = computed(() => propertyStore.properties);
+</script>
+
 <template>
   <div class="my-intro">
-    <div class="my-intro__title">I am looking for a job!</div>
-    <div class="my-intro__subtitle">
-      Software architect & full-stack developer
-    </div>
-    <div class="my-intro__email">
+    <div class="green my-intro__title">{{ properties?.title }}</div>
+    <div class="my-intro__subtitle" v-html="properties?.subtitle"></div>
+    <div class="green my-intro__email">
       <i class="fas fa-envelope"></i>
-      <span>solomonik.rodion@gmail.com</span>
+      <span> {{ properties?.email }} </span>
     </div>    
   </div>
 </template>
@@ -18,7 +24,7 @@
   &__title {
     font-weight: 500;
     font-size: 2.6rem;
-    color: greenyellow;
+    //color: greenyellow;
   }
 
   &__subtitle {
@@ -30,7 +36,7 @@
     line-height: 2rem;
     font-size: 1rem;
     font-weight: 400;
-    color: greenyellow;
+    //color: greenyellow;
     i {
       margin-right: 5px;
     }

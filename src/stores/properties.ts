@@ -10,9 +10,14 @@ const docRef = doc<Properties>(collRef, "properties");
 
 export const usePropertyStore = defineStore('properties', () => {
   const properties = ref<Properties>();
+  const ready = ref(false);
+
   onSnapshot<Properties>(docRef, (doc) => {
     properties.value = doc.data();    
+    if (!ready.value) {
+      ready.value = true;
+    }
   });
 
-  return { properties }
+  return { properties, ready }
 })

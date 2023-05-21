@@ -11,10 +11,15 @@ const countQuery = query(countCollRef, where("liked", "==", true));
 
 export const useLikesStore = defineStore('likes', () => {
     const likesCount = ref(0);
+    const ready = ref(false);
     
     async function nextTick() {
         const snapshot = await getCountFromServer(countQuery);
         likesCount.value = snapshot.data().count;
+        if (!ready.value) {
+            ready.value = true;
+        }
+        
         window.setTimeout(nextTick, 3000);
     }
 
@@ -27,5 +32,5 @@ export const useLikesStore = defineStore('likes', () => {
     }
 
     nextTick();
-    return { likesCount, setLiked }
+    return { likesCount, setLiked, ready }
 });  

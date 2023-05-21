@@ -7,5 +7,14 @@ export type UserEntity = {
 }
 
 export type Properties = {
-    JobSearchStartDateTime: Timestamp
+    startDateTime: Timestamp;
+    email: string;
+    subtitle: string;
+    title: string;
 } 
+
+export type Link = {
+    icon: string;
+    text: string;
+    url: string;
+}
