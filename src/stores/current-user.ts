@@ -71,6 +71,7 @@ export const useAuthStore = defineStore('currentUser', () => {
       },
       { merge: true }
     );
+
     onSnapshot<UserEntity>(docRef, doc => {
       currentUser.value = doc.data();
     });
