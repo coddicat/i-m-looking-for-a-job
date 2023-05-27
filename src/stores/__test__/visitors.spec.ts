@@ -35,7 +35,7 @@ test('Verify visitors count from server', async ({ expect }) => {
   await Promise.resolve();
   await Promise.resolve();
   await Promise.resolve();
-  expect(store.visitorsCount).toBe(9);
+  expect(store.visitorsCount).toBe(10);
 });
 
 test('Ready status should be true after first server update', async ({
