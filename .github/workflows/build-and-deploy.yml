@@ -44,7 +44,7 @@ jobs:
           path: dist        
   deploy:
     name: Deploy
-    needs: build
+    needs: [test, build] 
     runs-on: ubuntu-latest
     environment: Production
     steps:
