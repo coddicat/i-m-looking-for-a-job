@@ -27,11 +27,22 @@ jobs:
         run: echo '${{ secrets.FIREBASE_CONFIG }}' | jq '.' > './src/firebase/config.env.json'
       - name: Build
         run: npm ci && npm run build
+      - name: Archive Production Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist        
   deploy:
     name: Deploy
+    needs: build
     runs-on: ubuntu-latest
     environment: Production
     steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist    
       - name: Deploy
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
