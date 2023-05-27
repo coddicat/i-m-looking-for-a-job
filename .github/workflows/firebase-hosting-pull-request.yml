@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Set Firebase Config
-        run: echo $FIREBASE_CONFIG > './src/firebase/config.env.json'
+        run: echo $FIREBASE_CONFIG
       - name: Build
         run: npm ci && npm run build
       # - uses: FirebaseExtended/action-hosting-deploy@v0
