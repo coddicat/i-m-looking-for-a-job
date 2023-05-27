@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Set Firebase Config
-        run: echo '${{ $FIREBASE_CONFIG }}' | jq '.' > './src/firebase/config.env.json'
+        run: echo '${{ secrets.FIREBASE_CONFIG }}' | jq '.' > './src/firebase/config.env.json'
       - name: Build
         run: npm ci && npm run build
       - name: Deploy
