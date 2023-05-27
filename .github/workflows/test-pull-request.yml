@@ -1,0 +1,13 @@
+name: Test Pull Request
+'on':
+  pull_request:
+jobs:
+  build:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set Mock Firebase Config
+        run: echo '{}' | jq '.' > './src/firebase/config.env.json'
+      - name: Build
+        run: npm ci && npm run test:unit
