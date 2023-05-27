@@ -7,11 +7,11 @@ jobs:
   build_and_preview:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
-    environment: production
+    environment: Production
     steps:
       - uses: actions/checkout@v3
       - name: Set Firebase Config
-        run: echo $FIREBASE_CONFIG
+        run: echo $FIREBASE_CONFIG > './src/firebase/config.env.json'
       - name: Build
         run: npm ci && npm run build
       # - uses: FirebaseExtended/action-hosting-deploy@v0
