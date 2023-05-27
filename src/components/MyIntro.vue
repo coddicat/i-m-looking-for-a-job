@@ -7,7 +7,7 @@ const propertyStore = usePropertyStore();
 const properties = computed(() => propertyStore.properties);
 const route = useRoute();
 const router = useRouter();
-const timeout = 10000;
+const timeout = 20000;
 let timer: number | undefined;
 let stopped = true;
 const autoRouters = ['home', 'about'];
