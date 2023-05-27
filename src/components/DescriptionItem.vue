@@ -1,30 +1,31 @@
 <template>
   <div class="description-item">
-      <div class="description-item__heading">
-        <slot name="heading"></slot>
-      </div>
-      <slot></slot>
+    <div class="description-item__heading">
+      <slot name="heading"></slot>
+    </div>
+    <slot></slot>
   </div>
 </template>
 
 <style lang="scss">
+@import '@/assets/colors.scss';
+
 .description-item {
   flex: 1;
-  margin-top: 2rem;
-  margin-left: 1rem;
+  margin: 1.2rem 2rem;
+  color: $secondary;
 
   &__heading {
     font-size: 1.2rem;
     font-weight: 500;
     margin-bottom: 0.4rem;
-    color: var(--color-heading);
+    color: $foreground;
   }
 }
 
 @media (min-width: 1024px) {
   .description-item {
-    margin-top: 0;
-    padding: 0.4rem 0 1rem calc(var(--section-gap) / 2);
+    margin: 1.6rem 2rem;
   }
 }
 </style>

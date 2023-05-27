@@ -1,20 +1,21 @@
-import type { Timestamp } from "firebase/firestore";
+import type { Timestamp } from 'firebase/firestore';
 
 export type UserEntity = {
-    isAnonymous: boolean;
-    liked: boolean;
-    lastVisitTime: Timestamp;
-}
+  isAnonymous: boolean;
+  liked: boolean;
+  lastVisitTime: Timestamp;
+};
 
 export type Properties = {
-    startDateTime: Timestamp;
-    email: string;
-    subtitle: string;
-    title: string;
-} 
+  about: string;
+  startDateTime: Timestamp;
+  email: string;
+  subtitle: string;
+  title: string;
+};
 
 export type Link = {
-    icon: string;
-    text: string;
-    url: string;
-}
+  icon: string;
+  text: string;
+  url: string;
+};

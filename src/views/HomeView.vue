@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import moment from 'moment';
 import { computed, onMounted, onUnmounted, ref } from 'vue';
-import DescriptionItem from '@/components/DescriptionItem.vue'
+import DescriptionItem from '@/components/DescriptionItem.vue';
 import { usePropertyStore } from '@/stores/properties';
 import { useAuthStore } from '@/stores/current-user';
 import { useLikesStore } from '@/stores/likes';
 import { useVisitorsStore } from '@/stores/visitors';
 import { useLinksStore } from '@/stores/links';
-import '@/stores/likes';
 
 const propertyStore = usePropertyStore();
 const currentUserStore = useAuthStore();
@@ -24,7 +23,15 @@ const links = computed(() => linksStore.links);
 const timeSpent = ref<string>('N/A');
 
 let stopped = false;
-let timer: number | undefined = undefined;
+let timer: number | undefined;
+
+onMounted(nextTick);
+onUnmounted(() => {
+  stopped = true;
+  if (timer) {
+    window.clearTimeout(timer);
+  }
+});
 
 function detailedFromNow(datetime: moment.MomentInput) {
   const duration = moment.duration(moment().diff(moment(datetime)));
@@ -64,67 +71,98 @@ async function likeHandler() {
   }
   await likesStore.setLiked(uid.value, !liked.value);
 }
-
-onMounted(nextTick);
-
-onUnmounted(() => {
-  stopped = true;
-  if (timer) {
-    window.clearTimeout(timer);
-  }
-});
 </script>
 
 <template>
-<main class="home-view">
-  <DescriptionItem>
-    <template #heading>
-      <i class="home-view__like-btn fa-heart" :class="liked ? 'fas' : 'far'" @click="likeHandler"></i>
-    </template>
-    <span>{{ likes }} likes</span>
-  </DescriptionItem>
-  <DescriptionItem>
-    <template #heading>Number of site visitors</template>     
-    <span>{{ visitors }} people</span>
-  </DescriptionItem>
-  <DescriptionItem>
-    <template #heading>Time spent looking for a job</template>
-    <span>{{ timeSpent }}</span>
-  </DescriptionItem>
-  <DescriptionItem>
-    <template #heading>Links</template>
-    <a v-for="(link, $i) in links" :key="$i" :href="link.url" target="_blank" class="home-view__link">
-      <i :class="link.icon"></i>
-      {{ link.text }}
-    </a>
-  </DescriptionItem>
-</main>
+  <main class="home-view">
+    <DescriptionItem>
+      <template #heading>
+        <div class="home-view__like">
+          <i
+            class="home-view__like-btn fa-heart"
+            :class="liked ? 'fas' : 'far'"
+            @click="likeHandler"
+          ></i>
+          <img
+            src="@/assets/click.gif"
+            class="home-view__click-gif fade-in-slow"
+            width="100"
+          />
+        </div>
+      </template>
+      <span>{{ likes }} likes</span>
+    </DescriptionItem>
+    <DescriptionItem>
+      <template #heading>Number of site visitors</template>
+      <span>{{ visitors }} people</span>
+    </DescriptionItem>
+    <DescriptionItem>
+      <template #heading>Time spent looking for a job</template>
+      <span>{{ timeSpent }}</span>
+    </DescriptionItem>
+    <DescriptionItem>
+      <template #heading>Links</template>
+      <a
+        v-for="(link, $i) in links"
+        :key="$i"
+        :href="link.url"
+        target="_blank"
+        class="home-view__link"
+      >
+        <i :class="link.icon"></i>
+        {{ link.text }}
+      </a>
+    </DescriptionItem>
+  </main>
 </template>
 
 <style lang="scss">
+@import '@/assets/colors.scss';
+
 .home-view {
-  &__like-btn {
-    margin-left: -5px;
-    padding: 5px;
-    display: inline-block;
-    border-radius: 50%;
-    overflow: hidden;  
-    background-color: transparent;
-    transition: background-color 0.3s ease ;
-    cursor: pointer;
-    &:hover {
-      background-color: #666;
-      transition: background-color 0.3s ease ;
+  padding: 3.5rem;
+  width: 40rem;
+  &__like {
+    position: relative;
+
+    &-btn {
+      display: inline-block;
+      border-radius: 50%;
+      padding: 0.5rem;
+      margin-left: -0.5rem;
+      overflow: hidden;
+      background-color: transparent;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+      &:hover {
+        background-color: $hover-background;
+        transition: background-color 0.3s ease;
+      }
     }
   }
 
   &__link {
-    margin-right: 5px;
-    padding-right: 5px;
+    opacity: 0.9;
+    color: $primary;
+    margin-right: 0.5rem;
+    padding-right: 0.5rem;
     border-right: 1px solid;
+    text-decoration: none;
+
     &:last-of-type {
       border-right: none;
     }
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &__click-gif {
+    position: absolute;
+    transform: translate(-20px, -25px);
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
   }
 }
 </style>
