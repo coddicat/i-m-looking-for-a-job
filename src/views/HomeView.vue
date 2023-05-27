@@ -121,7 +121,6 @@ async function likeHandler() {
 
 .home-view {
   padding: 3.5rem;
-  width: 40rem;
   &__like {
     position: relative;
 

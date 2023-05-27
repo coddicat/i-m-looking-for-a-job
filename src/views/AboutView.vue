@@ -17,7 +17,6 @@ const about = computed(() => propertiesStore.properties?.about);
 
 <style lang="scss">
 .about-view {
-  width: 40rem;
   &__text {
     text-align: justify;
   }
