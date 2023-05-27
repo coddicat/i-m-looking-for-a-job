@@ -31,7 +31,6 @@ jobs:
           path: dist        
   deploy:
     name: Deploy
-    if: github.ref != 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     environment: Production
